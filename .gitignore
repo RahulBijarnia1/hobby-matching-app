@@ -205,3 +205,59 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# ===================
+# Node.js / Angular
+# ===================
+
+# Dependencies
+node_modules/
+.npm
+.yarn/
+yarn-error.log
+npm-debug.log*
+pnpm-debug.log*
+
+# Angular CLI
+.angular/
+dist/
+tmp/
+out-tsc/
+
+# Angular cache
+.angular/cache
+
+# TypeScript
+*.tsbuildinfo
+
+# Testing
+coverage/
+.nyc_output/
+e2e-results/
+
+# ESLint / Linting
+.eslintcache
+
+# Angular environment files (production secrets)
+# src/environments/environment.prod.ts
+
+# IDE - VSCode (optional - uncomment if needed)
+# .vscode/*
+# !.vscode/settings.json
+# !.vscode/tasks.json
+# !.vscode/launch.json
+# !.vscode/extensions.json
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*~

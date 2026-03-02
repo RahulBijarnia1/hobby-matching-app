@@ -1,0 +1,233 @@
+<div class="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
+      <div>
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white">Find Matches</h1>
+        <p class="text-gray-500 dark:text-gray-400 mt-1">Discover people who share your interests</p>
+      </div>
+      <button (click)="toggleSidebar()"
+              class="mt-4 sm:mt-0 lg:hidden px-4 py-2 bg-indigo-600 text-white rounded-xl flex items-center">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+        </svg>
+        Filters
+      </button>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      <!-- Sidebar Filters -->
+      <div [class]="showSidebar ? 'fixed inset-0 z-50 lg:relative lg:inset-auto' : 'hidden lg:block'">
+        <!-- Backdrop for mobile -->
+        @if (showSidebar) {
+          <div class="absolute inset-0 bg-black/50 lg:hidden" (click)="toggleSidebar()"></div>
+        }
+        
+        <div class="absolute right-0 top-0 h-full w-80 lg:w-full lg:relative lg:h-auto bg-white dark:bg-gray-800 rounded-l-2xl lg:rounded-2xl shadow-lg overflow-hidden animate-slide-in lg:animate-none">
+          <div class="bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-4 flex items-center justify-between">
+            <h2 class="text-lg font-semibold text-white">Filter Matches</h2>
+            <button (click)="toggleSidebar()" class="lg:hidden text-white hover:text-gray-200">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+          
+          <div class="p-6 space-y-6">
+            <!-- Age Range -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Age Range</label>
+              <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <input type="number" [(ngModel)]="minAge" min="13" max="100"
+                         class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500"
+                         placeholder="Min">
+                  <span class="text-xs text-gray-500 dark:text-gray-400 mt-1">Min: 13</span>
+                </div>
+                <div>
+                  <input type="number" [(ngModel)]="maxAge" min="13" max="100"
+                         class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-indigo-500"
+                         placeholder="Max">
+                  <span class="text-xs text-gray-500 dark:text-gray-400 mt-1">Max: 100</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Min Match Percentage -->
+            <div>
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Minimum Match: {{ minMatchPercentage }}%
+              </label>
+              <input type="range" [(ngModel)]="minMatchPercentage" min="0" max="100" step="5"
+                     class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+              <div class="flex justify-between text-xs text-gray-500 dark:text-gray-400 mt-1">
+                <span>0%</span>
+                <span>50%</span>
+                <span>100%</span>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex space-x-3">
+              <button (click)="applyFilters()"
+                      class="flex-1 px-4 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all">
+                Apply
+              </button>
+              <button (click)="resetFilters()"
+                      class="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                Reset
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Matches Content -->
+      <div class="lg:col-span-3">
+        @if (isLoading) {
+          <div class="flex items-center justify-center min-h-[400px]">
+            <app-spinner size="lg"></app-spinner>
+          </div>
+        } @else {
+          <!-- Results Header -->
+          <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-4 mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between">
+            <p class="text-gray-700 dark:text-gray-300">
+              Found <span class="font-bold text-indigo-600 dark:text-indigo-400">{{ totalMatches }}</span> matches
+            </p>
+            <div class="mt-3 sm:mt-0 flex items-center space-x-2">
+              <span class="text-sm text-gray-500 dark:text-gray-400">Sort by:</span>
+              <button (click)="sortMatches('match_percentage')"
+                      [class]="sortBy === 'match_percentage' ? 'bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300' : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300'"
+                      class="px-3 py-1 rounded-lg text-sm font-medium transition-colors">
+                Match %
+              </button>
+              <button (click)="sortMatches('age')"
+                      [class]="sortBy === 'age' ? 'bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300' : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300'"
+                      class="px-3 py-1 rounded-lg text-sm font-medium transition-colors">
+                Age
+              </button>
+              <button (click)="sortMatches('name')"
+                      [class]="sortBy === 'name' ? 'bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300' : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300'"
+                      class="px-3 py-1 rounded-lg text-sm font-medium transition-colors">
+                Name
+              </button>
+            </div>
+          </div>
+
+          @if (matches.length === 0) {
+            <!-- No Matches -->
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-12 text-center">
+              <div class="w-20 h-20 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg class="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+              </div>
+              <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-2">No Matches Found</h2>
+              <p class="text-gray-600 dark:text-gray-400 mb-6">Try adjusting your filters or add more hobbies to your profile.</p>
+              <a routerLink="/dashboard"
+                 class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all">
+                Add More Hobbies
+              </a>
+            </div>
+          } @else {
+            <!-- Matches Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mb-8">
+              @for (match of matches; track match.id) {
+                <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1 animate-fade-in">
+                  <!-- Match Header -->
+                  <div class="p-6">
+                    <div class="flex items-start justify-between mb-4">
+                      <div class="flex items-center">
+                        <div class="w-14 h-14 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center text-white text-xl font-bold mr-4 shadow-lg">
+                          {{ match.name.charAt(0).toUpperCase() }}
+                        </div>
+                        <div>
+                          <h3 class="text-lg font-bold text-gray-900 dark:text-white">{{ match.name }}</h3>
+                          <p class="text-gray-500 dark:text-gray-400">{{ match.age }} years old</p>
+                        </div>
+                      </div>
+                      <div [class]="getMatchBgColor(match.match_percentage)"
+                           class="px-3 py-1 rounded-full font-bold">
+                        <span [class]="getMatchColor(match.match_percentage)">{{ match.match_percentage | number:'1.0-0' }}%</span>
+                      </div>
+                    </div>
+
+                    <!-- Progress Bar -->
+                    <div class="mb-4">
+                      <div class="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                        <div [class]="getProgressBarColor(match.match_percentage)"
+                             class="h-full rounded-full transition-all duration-500"
+                             [style.width.%]="match.match_percentage"></div>
+                      </div>
+                    </div>
+
+                    <!-- Bio -->
+                    @if (match.bio) {
+                      <p class="text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">{{ match.bio }}</p>
+                    }
+
+                    <!-- Common Hobbies -->
+                    <div>
+                      <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                        Common Hobbies ({{ match.common_hobbies.length || 0 }})
+                      </p>
+                      <div class="flex flex-wrap gap-2">
+                        @for (hobby of match.common_hobbies.slice(0, 4); track hobby.id) {
+                          <span class="px-2 py-1 bg-indigo-100 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 rounded-full text-xs font-medium">
+                            {{ hobby.name }}
+                          </span>
+                        }
+                        @if ((match.common_hobbies.length || 0) > 4) {
+                          <span class="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 rounded-full text-xs font-medium">
+                            +{{ match.common_hobbies.length - 4 }} more
+                          </span>
+                        }
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Card Footer -->
+                  <div class="bg-gray-50 dark:bg-gray-700/50 px-6 py-4 border-t border-gray-100 dark:border-gray-700">
+                    <button class="w-full flex items-center justify-center px-4 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all">
+                      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                      </svg>
+                      Connect
+                    </button>
+                  </div>
+                </div>
+              }
+            </div>
+
+            <!-- Pagination -->
+            @if (totalPages > 1) {
+              <div class="flex items-center justify-center space-x-2">
+                <button (click)="prevPage()" [disabled]="!hasPrevPage"
+                        class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+                
+                @for (page of pageNumbers; track page) {
+                  <button (click)="goToPage(page)"
+                          [class]="page === currentPage ? 'bg-indigo-600 text-white' : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'"
+                          class="w-10 h-10 rounded-xl font-medium transition-colors">
+                    {{ page }}
+                  </button>
+                }
+                
+                <button (click)="nextPage()" [disabled]="!hasNextPage"
+                        class="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
+            }
+          }
+        }
+      </div>
+    </div>
+  </div>
+</div>

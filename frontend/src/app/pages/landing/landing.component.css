@@ -1,0 +1,21 @@
+/* Landing page styles */
+
+/* Hero section animations */
+:host {
+  display: block;
+}
+
+/* Gradient text animation */
+.text-gradient-animate {
+  background-size: 200% 200%;
+  animation: gradient-shift 5s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
