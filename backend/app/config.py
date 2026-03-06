@@ -33,7 +33,7 @@ class Settings:
         "http://localhost:4200",
         "http://127.0.0.1:4200",
         "http://localhost:3000",
-        os.getenv("FRONTEND_URL", ""),
+        "https://hobby-matching-app.vercel.app",
     ]
     
     # Environment
