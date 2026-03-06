@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://your-production-api.com/api/v1'
+  apiUrl: 'https://hobby-matching-app-x1yj.onrender.com/api/v1'
 };
