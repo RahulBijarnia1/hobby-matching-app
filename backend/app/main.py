@@ -145,16 +145,21 @@ DEFAULT_HOBBIES = [
 
 
 def seed_hobbies():
-    """Seed default hobbies if table is empty."""
+    """Seed default hobbies and add any new ones that don't exist yet."""
     db = SessionLocal()
     try:
-        existing = db.query(Hobby).count()
-        if existing == 0:
-            for hobby_data in DEFAULT_HOBBIES:
+        existing_names = {h.name for h in db.query(Hobby.name).all()}
+        added = 0
+        for hobby_data in DEFAULT_HOBBIES:
+            if hobby_data["name"] not in existing_names:
                 hobby = Hobby(name=hobby_data["name"], category=hobby_data["category"])
                 db.add(hobby)
+                added += 1
+        if added > 0:
             db.commit()
-            print(f"Seeded {len(DEFAULT_HOBBIES)} hobbies.")
+            print(f"Seeded {added} new hobbies. Total: {len(DEFAULT_HOBBIES)}.")
+        else:
+            print(f"All {len(DEFAULT_HOBBIES)} hobbies already exist.")
     except Exception as e:
         print(f"Error seeding hobbies: {e}")
         db.rollback()
