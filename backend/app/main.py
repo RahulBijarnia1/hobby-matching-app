@@ -14,7 +14,7 @@ from app.models.hobby import Hobby
 
 # Default hobbies with categories
 DEFAULT_HOBBIES = [
-    # Sports & Fitness
+    # Sports & Fitness (20)
     {"name": "Soccer", "category": "Sports & Fitness"},
     {"name": "Basketball", "category": "Sports & Fitness"},
     {"name": "Tennis", "category": "Sports & Fitness"},
@@ -25,8 +25,18 @@ DEFAULT_HOBBIES = [
     {"name": "Cycling", "category": "Sports & Fitness"},
     {"name": "Hiking", "category": "Sports & Fitness"},
     {"name": "Martial Arts", "category": "Sports & Fitness"},
+    {"name": "Cricket", "category": "Sports & Fitness"},
+    {"name": "Badminton", "category": "Sports & Fitness"},
+    {"name": "Table Tennis", "category": "Sports & Fitness"},
+    {"name": "Volleyball", "category": "Sports & Fitness"},
+    {"name": "Baseball", "category": "Sports & Fitness"},
+    {"name": "Golf", "category": "Sports & Fitness"},
+    {"name": "Boxing", "category": "Sports & Fitness"},
+    {"name": "Skateboarding", "category": "Sports & Fitness"},
+    {"name": "Rugby", "category": "Sports & Fitness"},
+    {"name": "Ice Skating", "category": "Sports & Fitness"},
     
-    # Arts & Creativity
+    # Arts & Creativity (15)
     {"name": "Painting", "category": "Arts & Creativity"},
     {"name": "Drawing", "category": "Arts & Creativity"},
     {"name": "Photography", "category": "Arts & Creativity"},
@@ -37,8 +47,13 @@ DEFAULT_HOBBIES = [
     {"name": "Singing", "category": "Arts & Creativity"},
     {"name": "Dancing", "category": "Arts & Creativity"},
     {"name": "Crafts & DIY", "category": "Arts & Creativity"},
+    {"name": "Pottery", "category": "Arts & Creativity"},
+    {"name": "Calligraphy", "category": "Arts & Creativity"},
+    {"name": "Sculpting", "category": "Arts & Creativity"},
+    {"name": "Knitting & Crochet", "category": "Arts & Creativity"},
+    {"name": "Film Making", "category": "Arts & Creativity"},
     
-    # Technology
+    # Technology (12)
     {"name": "Programming", "category": "Technology"},
     {"name": "Gaming", "category": "Technology"},
     {"name": "3D Printing", "category": "Technology"},
@@ -47,8 +62,12 @@ DEFAULT_HOBBIES = [
     {"name": "Mobile App Development", "category": "Technology"},
     {"name": "AI & Machine Learning", "category": "Technology"},
     {"name": "Cybersecurity", "category": "Technology"},
+    {"name": "Drone Flying", "category": "Technology"},
+    {"name": "Game Development", "category": "Technology"},
+    {"name": "Data Science", "category": "Technology"},
+    {"name": "Electronics & Arduino", "category": "Technology"},
     
-    # Entertainment
+    # Entertainment (12)
     {"name": "Movies", "category": "Entertainment"},
     {"name": "TV Series", "category": "Entertainment"},
     {"name": "Anime", "category": "Entertainment"},
@@ -56,8 +75,13 @@ DEFAULT_HOBBIES = [
     {"name": "Board Games", "category": "Entertainment"},
     {"name": "Podcasts", "category": "Entertainment"},
     {"name": "Stand-up Comedy", "category": "Entertainment"},
+    {"name": "Card Games", "category": "Entertainment"},
+    {"name": "Trivia & Quiz", "category": "Entertainment"},
+    {"name": "Cosplay", "category": "Entertainment"},
+    {"name": "Magic & Illusion", "category": "Entertainment"},
+    {"name": "Karaoke", "category": "Entertainment"},
     
-    # Outdoor & Nature
+    # Outdoor & Nature (13)
     {"name": "Camping", "category": "Outdoor & Nature"},
     {"name": "Fishing", "category": "Outdoor & Nature"},
     {"name": "Bird Watching", "category": "Outdoor & Nature"},
@@ -65,20 +89,58 @@ DEFAULT_HOBBIES = [
     {"name": "Traveling", "category": "Outdoor & Nature"},
     {"name": "Rock Climbing", "category": "Outdoor & Nature"},
     {"name": "Surfing", "category": "Outdoor & Nature"},
+    {"name": "Kayaking", "category": "Outdoor & Nature"},
+    {"name": "Horseback Riding", "category": "Outdoor & Nature"},
+    {"name": "Scuba Diving", "category": "Outdoor & Nature"},
+    {"name": "Skiing & Snowboarding", "category": "Outdoor & Nature"},
+    {"name": "Photography Nature Walks", "category": "Outdoor & Nature"},
+    {"name": "Stargazing", "category": "Outdoor & Nature"},
     
-    # Food & Culinary
+    # Food & Culinary (10)
     {"name": "Cooking", "category": "Food & Culinary"},
     {"name": "Baking", "category": "Food & Culinary"},
     {"name": "Wine Tasting", "category": "Food & Culinary"},
     {"name": "Coffee Brewing", "category": "Food & Culinary"},
     {"name": "Food Photography", "category": "Food & Culinary"},
+    {"name": "BBQ & Grilling", "category": "Food & Culinary"},
+    {"name": "Mixology & Cocktails", "category": "Food & Culinary"},
+    {"name": "Meal Prep", "category": "Food & Culinary"},
+    {"name": "Tea Tasting", "category": "Food & Culinary"},
+    {"name": "Fermentation & Pickling", "category": "Food & Culinary"},
     
-    # Social & Community
+    # Social & Community (10)
     {"name": "Volunteering", "category": "Social & Community"},
     {"name": "Event Planning", "category": "Social & Community"},
     {"name": "Public Speaking", "category": "Social & Community"},
     {"name": "Networking", "category": "Social & Community"},
     {"name": "Language Learning", "category": "Social & Community"},
+    {"name": "Book Club", "category": "Social & Community"},
+    {"name": "Debate & Discussion", "category": "Social & Community"},
+    {"name": "Mentoring", "category": "Social & Community"},
+    {"name": "Community Service", "category": "Social & Community"},
+    {"name": "Cultural Exchange", "category": "Social & Community"},
+    
+    # Mind & Wellness (10)
+    {"name": "Meditation", "category": "Mind & Wellness"},
+    {"name": "Journaling", "category": "Mind & Wellness"},
+    {"name": "Chess", "category": "Mind & Wellness"},
+    {"name": "Puzzles & Sudoku", "category": "Mind & Wellness"},
+    {"name": "Astrology", "category": "Mind & Wellness"},
+    {"name": "Tarot & Oracle", "category": "Mind & Wellness"},
+    {"name": "Mindfulness", "category": "Mind & Wellness"},
+    {"name": "Aromatherapy", "category": "Mind & Wellness"},
+    {"name": "Spa & Self-Care", "category": "Mind & Wellness"},
+    {"name": "Breathwork", "category": "Mind & Wellness"},
+    
+    # Collecting & Hobbies (8)
+    {"name": "Stamp Collecting", "category": "Collecting & Hobbies"},
+    {"name": "Coin Collecting", "category": "Collecting & Hobbies"},
+    {"name": "Vintage & Thrifting", "category": "Collecting & Hobbies"},
+    {"name": "Model Building", "category": "Collecting & Hobbies"},
+    {"name": "Lego Building", "category": "Collecting & Hobbies"},
+    {"name": "Trading Cards", "category": "Collecting & Hobbies"},
+    {"name": "Vinyl Records", "category": "Collecting & Hobbies"},
+    {"name": "Antique Hunting", "category": "Collecting & Hobbies"},
 ]
 
 

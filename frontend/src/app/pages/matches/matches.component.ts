@@ -22,6 +22,7 @@ export class MatchesComponent implements OnInit {
 
   matches: UserMatch[] = [];
   isLoading = true;
+  connectedIds: Set<number> = new Set();
   
   // Pagination
   currentPage = 1;
@@ -173,5 +174,14 @@ export class MatchesComponent implements OnInit {
 
   toggleSidebar(): void {
     this.showSidebar = !this.showSidebar;
+  }
+
+  connectWith(match: UserMatch): void {
+    this.connectedIds.add(match.id);
+    this.toastService.success(`Connected with ${match.name}! Their email is shown below.`);
+  }
+
+  isConnected(matchId: number): boolean {
+    return this.connectedIds.has(matchId);
   }
 }
